@@ -1,0 +1,300 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HR1 Onboarding Workflow</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <style>
+    .sidebar {
+      height: 100%;
+      width: 0;
+      position: fixed;
+      z-index: 50;
+      top: 0;
+      left: 0;
+      background-color: #111;
+      overflow-x: hidden;
+      transition: 0.5s;
+      padding-top: 60px;
+    }
+
+    .sidebar a {
+      padding: 10px 15px;
+      text-decoration: none;
+      font-size: 18px;
+      color: #f1f1f1;
+      display: block;
+      transition: 0.3s;
+    }
+
+    .sidebar a:hover {
+      color: #f39c12;
+    }
+
+    .sidebar-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      display: block;
+      margin: 0 auto 20px;
+    }
+
+    .closebtn {
+      position: absolute;
+      top: 20px;
+      right: 25px;
+      font-size: 36px;
+      color: white;
+      cursor: pointer;
+    }
+
+    .nav-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+    }
+  </style>
+</head>
+
+<body class="bg-gray-100 font-sans">
+  <!-- Sidebar -->
+  <div id="sidebar" class="sidebar">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeSidebar()">&times;</a>
+    <img src="1.jpg" alt="Avatar" class="sidebar-avatar" />
+    <h2 class="text-center text-white font-bold text-xl mb-4">ADMIN</h2>
+    <a href="dashboard.html"><i class="fas fa-home mr-2"></i> Dashboard</a>
+    <a href="applicant-checking.html"><i class="fas fa-user-check mr-2"></i> New Applicant</a>
+    <a href="training.html"><i class="fas fa-chalkboard-teacher mr-2"></i> Training</a>
+    <a href="onboarding.html"><i class="fas fa-user-plus mr-2"></i> Onboarding</a>
+    <a href="performance management.html"><i class="fas fa-chart-line mr-2"></i> Performance Management</a>
+    <a href="social recogtion.html"><i class="fas fa-users mr-2"></i> Social Recognition</a>
+    <a href="Compentency.html"><i class="fas fa-tasks mr-2"></i> Competency Management</a>
+    <a href="succession planning.html"><i class="fas fa-project-diagram mr-2"></i> Succession Planning</a>
+    <a href="learning Training.html"><i class="fas fa-book-open mr-2"></i> Learning Training Management</a>
+    <a href="contact.html"><i class="fas fa-envelope mr-2"></i> Contact</a>
+    <a href="About.html"><i class="fas fa-info-circle mr-2"></i> About</a>
+    <a href="login.php"><i class="fas fa-sign-out-alt mr-2"></i> Logout</a>
+  </div>
+
+  <!-- Top Navigation -->
+  <nav class="bg-gray-900 text-white px-6 py-4 shadow">
+    <div class="flex items-center justify-between">
+      <div class="flex items-center space-x-4">
+        <img src="1.jpg" alt="Logo" class="nav-avatar" />
+        <button onclick="openSidebar()" class="text-xl">
+          <i class="fas fa-bars mr-2"></i>Hospital HR
+        </button>
+      </div>
+      <ul class="hidden md:flex items-center space-x-6">
+        <li><a href="dashboard.html" class="hover:text-yellow-400"><i class="fas fa-home mr-1"></i>Home</a></li>
+        <li><a href="contact.html" class="hover:text-yellow-400"><i class="fas fa-envelope mr-1"></i>Contact</a></li>
+        <li><a href="About.html" class="hover:text-yellow-400"><i class="fas fa-info-circle mr-1"></i>About</a></li>
+        <li><a href="login.php" class="hover:text-yellow-400"><i class="fas fa-sign-out-alt mr-1"></i>Logout</a></li>
+      </ul>
+    </div>
+  </nav>
+
+  <!-- Workflow Section -->
+  <section class="p-6 space-y-6" id="workflow-section"></section>
+
+  <!-- Add Step Button -->
+  <div class="flex justify-end p-6">
+    <button onclick="addStepPrompt()" class="flex items-center gap-1 bg-blue-600 text-white px-4 py-2 rounded-full shadow hover:bg-blue-700">
+      <span class="text-xl">+</span> New Step
+    </button>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-gray-800 text-white text-sm py-10 mt-10">
+    <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-8">
+      <div>
+        <p class="mb-1">📞 US: 0946-480-0207 | Landline: 1300 886 688</p>
+        <p class="mb-1">📞 PH: 0900 005 486 | Landline: 0800 014 8941</p>
+        <p>📍 Bestlink College, Quezon City, Metro Manila</p>
+      </div>
+      <div class="md:text-right space-y-2">
+        <a href="#" class="block hover:underline">Privacy Policy</a>
+        <a href="#" class="block hover:underline">Terms & Conditions</a>
+        <a href="#" class="block hover:underline">Trust Centre</a>
+        <p class="text-xs text-gray-400 mt-4">&copy; 2025 MedForce Hospital HR. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function openSidebar() {
+      document.getElementById('sidebar').style.width = "250px";
+    }
+
+    function closeSidebar() {
+      document.getElementById('sidebar').style.width = "0";
+    }
+
+    const workflowSection = document.getElementById('workflow-section');
+
+    const defaultSteps = [
+      {
+        title: 'Before First Day',
+        tasks: [
+          { task: 'Prepare welcome kit', type: '✅', document: 'welcomekit.zip', assigned: 'Jim Jones', employee: 'Tom Hardy', due: '07/10/2020' }
+        ]
+      },
+      {
+        title: 'Paper Work - First Week',
+        tasks: [
+          { task: 'Sign I-9', type: '📄', document: 'I-9.pdf', assigned: 'HR', employee: 'Tom Hardy', due: '07/12/2020' }
+        ]
+      }
+    ];
+
+    function renderWorkflow(steps) {
+      workflowSection.innerHTML = '';
+      steps.forEach((step, index) => {
+        const group = document.createElement('div');
+        group.className = 'bg-white shadow rounded';
+        group.innerHTML = `
+          <div class="bg-blue-100 px-4 py-2 font-semibold text-blue-900 flex justify-between items-center">
+            <span>${step.title}</span>
+            <div class="space-x-2">
+              <button onclick="editStep(${index})" class="text-blue-600 hover:underline text-sm">✎ Edit Step</button>
+              <button onclick="addTaskPrompt(${index})" class="text-green-600 hover:underline text-sm">➕ Add Task</button>
+            </div>
+          </div>
+          <table class="w-full text-left">
+            <thead class="bg-gray-100">
+              <tr>
+                <th class="px-4 py-2">Task</th>
+                <th class="px-4 py-2">Department</th>
+                <th class="px-4 py-2">Document</th>
+                <th class="px-4 py-2">Assigned To</th>
+                <th class="px-4 py-2">Employee</th>
+                <th class="px-4 py-2">Due Date</th>
+                <th class="px-4 py-2">Action</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${step.tasks.map((task, i) => `
+                <tr class="border-t">
+                  <td class="px-4 py-2">${task.task}</td>
+                  <td class="px-4 py-2 text-center">${task.type}</td>
+                  <td class="px-4 py-2 text-blue-600 underline">${task.document}</td>
+                  <td class="px-4 py-2">${task.assigned}</td>
+                  <td class="px-4 py-2">${task.employee}</td>
+                  <td class="px-4 py-2">${task.due}</td>
+                  <td class="px-4 py-2 flex gap-1">
+                    <button onclick="editTask(${index}, ${i})">📝</button>
+                    <button onclick="deleteTask(${index}, ${i})">🗑️</button>
+                    <button onclick="sendTask(${index}, ${i})">📤</button>
+                  </td>
+                </tr>`).join('')}
+            </tbody>
+          </table>
+        `;
+        workflowSection.appendChild(group);
+      });
+    }
+
+    function addStepPrompt() {
+      Swal.fire({
+        title: 'New Step',
+        input: 'text',
+        inputLabel: 'Step Title',
+        showCancelButton: true
+      }).then(result => {
+        if (result.isConfirmed && result.value.trim()) {
+          defaultSteps.push({ title: result.value.trim(), tasks: [] });
+          renderWorkflow(defaultSteps);
+        }
+      });
+    }
+
+    function editStep(index) {
+      Swal.fire({
+        title: 'Edit Step',
+        input: 'text',
+        inputLabel: 'Step Title',
+        inputValue: defaultSteps[index].title,
+        showCancelButton: true
+      }).then(result => {
+        if (result.isConfirmed && result.value.trim()) {
+          defaultSteps[index].title = result.value.trim();
+          renderWorkflow(defaultSteps);
+        }
+      });
+    }
+
+    function addTaskPrompt(stepIndex) {
+      Swal.fire({
+        title: 'Add Task',
+        html: getTaskFormHTML(),
+        focusConfirm: false,
+        preConfirm: getTaskFormValues,
+        showCancelButton: true
+      }).then(result => {
+        if (result.isConfirmed) {
+          defaultSteps[stepIndex].tasks.push(result.value);
+          renderWorkflow(defaultSteps);
+        }
+      });
+    }
+
+    function editTask(stepIndex, taskIndex) {
+      const task = defaultSteps[stepIndex].tasks[taskIndex];
+      Swal.fire({
+        title: 'Edit Task',
+        html: getTaskFormHTML(task),
+        focusConfirm: false,
+        preConfirm: getTaskFormValues,
+        showCancelButton: true
+      }).then(result => {
+        if (result.isConfirmed) {
+          defaultSteps[stepIndex].tasks[taskIndex] = result.value;
+          renderWorkflow(defaultSteps);
+        }
+      });
+    }
+
+    function deleteTask(stepIndex, taskIndex) {
+      defaultSteps[stepIndex].tasks.splice(taskIndex, 1);
+      renderWorkflow(defaultSteps);
+    }
+
+    function sendTask(stepIndex, taskIndex) {
+      const task = defaultSteps[stepIndex].tasks[taskIndex];
+      Swal.fire({
+        icon: 'success',
+        title: `Sent to ${task.employee}`,
+        text: `Task "${task.task}" has been sent.`
+      });
+    }
+
+    function getTaskFormHTML(task = {}) {
+      return `
+        <input id="task" class="swal2-input" placeholder="Task" value="${task.task || ''}">
+        <input id="type" class="swal2-input" placeholder="Type (e.g., ✅ or 📄)" value="${task.type || ''}">
+        <input id="document" class="swal2-input" placeholder="Document Name" value="${task.document || ''}">
+        <input id="assigned" class="swal2-input" placeholder="Assigned To" value="${task.assigned || ''}">
+        <input id="employee" class="swal2-input" placeholder="Employee Name" value="${task.employee || ''}">
+        <input id="due" class="swal2-input" placeholder="Due Date (MM/DD/YYYY)" value="${task.due || ''}">
+      `;
+    }
+
+    function getTaskFormValues() {
+      return {
+        task: document.getElementById('Department').value,
+        type: document.getElementById('type').value,
+        document: document.getElementById('document').value,
+        assigned: document.getElementById('assigned').value,
+        employee: document.getElementById('employee').value,
+        due: document.getElementById('due').value
+      };
+    }
+
+    renderWorkflow(defaultSteps);
+  </script>
+</body>
+</html>

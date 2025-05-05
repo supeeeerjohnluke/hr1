@@ -1,0 +1,407 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Competency Management</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+    <style>
+        /* Sidebar styles */
+        .sidebar {
+          height: 100%;
+          width: 0;
+          position: fixed;
+          z-index: 50;
+          top: 0;
+          left: 0;
+          background-color: #111;
+          overflow-x: hidden;
+          transition: 0.5s;
+          padding-top: 60px;
+        }
+    
+        .sidebar a {
+          padding: 10px 15px;
+          text-decoration: none;
+          font-size: 18px;
+          color: #f1f1f1;
+          display: block;
+          transition: 0.3s;
+        }
+    
+        .sidebar a:hover {
+          color: #f39c12;
+        }
+    
+        .sidebar-avatar {
+          width: 80px;
+          height: 80px;
+          border-radius: 50%;
+          display: block;
+          margin: 0 auto 20px;
+        }
+    
+        .closebtn {
+          position: absolute;
+          top: 20px;
+          right: 25px;
+          font-size: 36px;
+          color: white;
+          cursor: pointer;
+        }
+    
+        .nav-avatar {
+          width: 50px;
+          height: 50px;
+          border-radius: 50%;
+        }
+    
+        /* Modal styles */
+        .modal {
+          display: none;
+          position: fixed;
+          top: 0;
+          left: 0;
+          width: 100%;
+          height: 100%;
+          background-color: rgba(0, 0, 0, 0.5);
+          justify-content: center;
+          align-items: center;
+          z-index: 100;
+        }
+    
+        .modal-content {
+          background-color: white;
+          padding: 20px;
+          border-radius: 8px;
+          width: 80%;
+          max-width: 500px;
+        }
+    
+        /* Toggle animation */
+        .submenu {
+          display: none;
+          padding-left: 20px;
+        }
+    
+        .submenu.open {
+          display: block;
+        }
+      </style>
+    </head>
+    
+    <body class="bg-gray-100 font-sans">
+    
+      <!-- Sidebar -->
+      <div id="sidebar" class="sidebar">
+        <a href="javascript:void(0)" class="closebtn" onclick="closeSidebar()">&times;</a>
+        <img src="1.jpg" alt="Avatar" class="sidebar-avatar" />
+        <h2 class="text-center text-white font-bold text-xl mb-4">ADMIN</h2>
+        <a href="dashboard.html"><i class="fas fa-home mr-2"></i> Dashboard</a>
+        <a href="applicant-checking.html"><i class="fas fa-home mr-2"></i> New Applicant</a>
+        <a href="training.html"><i class="fas fa-home mr-2"></i> Training</a>
+          <a href="onboarding.html">Onboarding</a>
+        <a href="performance management.html"><i class="fas fa-envelope mr-2"></i>Performance Management</a>
+        <a href="social recogtion.html"><i class=""></i>Social Recogtion</a>
+        <a href="Compentency.html"><i class=""></i>Compentency Management</a>
+        <a href="succession planning.html"><i class="fas fa-envelope mr-2"></i>Succession Planning</a>
+    
+        <a href="learning Training.html"><i class="fas fa-envelope mr-2"></i>Learning training Management</a>
+    
+        <a href="contact.html"><i class="fas fa-envelope mr-2"></i> Contact</a>
+        <a href="About.html"><i class="fas fa-info-circle mr-2"></i> About</a>
+        <a href="login.php"><i class="fas fa-sign-in-alt mr-2"></i> Logout</a>
+      </div>
+    
+      <!-- Navbar -->
+      <nav class="bg-gray-900 text-white px-6 py-4 shadow">
+        <div class="flex items-center justify-between">
+          <div class="flex items-center space-x-4">
+            <img src="1.jpg" alt="Logo" class="nav-avatar" />
+            <button onclick="openSidebar()" class="text-xl">
+              <i class="fas fa-bars mr-2"></i>Hospital HR
+            </button>
+          </div>
+          <ul class="hidden md:flex items-center space-x-6">
+            <li><a href="dashboard.html" class="hover:text-yellow-400"><i class="fas fa-home mr-1"></i>Home</a></li>
+            <li><a href="contact.html" class="hover:text-yellow-400"><i class="fas fa-envelope mr-1"></i>Contact</a></li>
+            <li><a href="About.html" class="hover:text-yellow-400"><i class="fas fa-info-circle mr-1"></i>About</a></li>
+            <li><a href="login.php" class="hover:text-yellow-400"><i class="fas fa-sign-in-alt mr-1"></i>Logout</a></li>
+          </ul>
+        </div>
+      </nav>
+    
+<main class="p-6 max-w-7xl mx-auto space-y-8">
+  <header>
+    <h1 class="text-4xl font-bold">Competency Management</h1>
+  </header>
+
+  <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+    <!-- Employee Details -->
+    <section class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
+      <h2 class="text-xl font-semibold mb-4">Employee Details</h2>
+      <input id="employeeName" type="text" placeholder="Enter full name" class="w-full p-3 border rounded mb-4 shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500">
+      <select id="department" class="w-full p-3 border rounded shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500">
+        <option disabled selected>Select Department</option>
+        <option>Human Resources</option>
+        <option>Doctors</option>
+        <option>Nurse</option>
+        <option>Staff</option>
+      </select>
+    </section>
+
+    <!-- Skill Assessment -->
+    <section class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
+      <h2 class="text-xl font-semibold mb-4">Skill Assessment</h2>
+      <select id="skillCategory" class="w-full p-3 border rounded mb-4 shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500">
+        <option>Technical Skills</option>
+        <option>Communication</option>
+        <option>Teamwork</option>
+        <option>Safety Skills</option>
+        <option>Leadership</option>
+      </select>
+      <fieldset class="mb-4 space-y-2">
+        <legend class="font-medium text-gray-700">Proficiency Level:</legend>
+        <label class="block"><input type="radio" name="proficiency" value="Beginner" class="mr-2">Beginner</label>
+        <label class="block"><input type="radio" name="proficiency" value="Intermediate" class="mr-2">Intermediate</label>
+        <label class="block"><input type="radio" name="proficiency" value="Expert" class="mr-2">Expert</label>
+      </fieldset>
+      <button id="addToMatrixBtn" class="w-full bg-purple-600 hover:bg-purple-700 text-white p-3 rounded transition">Add to Skills Matrix</button>
+    </section>
+
+    <!-- Growth Plan -->
+    <section class="bg-white p-6 rounded-lg shadow hover:shadow-lg transition">
+      <h2 class="text-xl font-semibold mb-4">Growth Plan</h2>
+      <textarea placeholder="Development goals and training needs" id="taskInput" class="w-full p-3 border rounded mb-4 shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500"></textarea>
+      <input type="date" id="growthPlanDate" class="w-full p-3 border rounded mb-4 shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500">
+      <button onclick="openEmailModal()" class="w-full bg-purple-600 hover:bg-purple-700 text-white p-3 rounded transition">Send via Gmail</button>
+    </section>
+  </div>
+
+  <!-- Employee Skills Matrix -->
+  <section>
+    <h1 class="text-2xl font-bold mb-4">Employee Skills Matrix</h1>
+    <div class="overflow-x-auto bg-white shadow rounded-lg p-4">
+      <table class="table-auto w-full text-left">
+        <thead>
+          <tr class="bg-gray-100 text-gray-700">
+            <th class="px-4 py-2">Employee</th>
+            <th class="px-4 py-2">Department</th>
+            <th class="px-4 py-2">Technical Skills</th>
+            <th class="px-4 py-2">Safety Skills</th>
+            <th class="px-4 py-2">Leadership</th>
+            <th class="px-4 py-2">AI Insight</th>
+          </tr>
+        </thead>
+        <tbody class="text-sm text-gray-800" id="matrixTableBody">
+          <!-- Rows will be inserted here dynamically -->
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- AI Insight Panel -->
+  <div id="aiPanel" class="fixed top-0 right-0 w-full max-w-md h-full bg-white shadow-lg transform translate-x-full transition-transform duration-300 ease-in-out z-50 overflow-y-auto">
+    <div class="p-6 border-b flex justify-between items-center">
+      <h2 class="text-lg font-semibold">AI Competency Insight</h2>
+      <button id="closeAiPanel" class="text-gray-500 hover:text-black text-xl">&times;</button>
+    </div>
+    <div class="p-6 space-y-4 text-sm text-gray-700" id="aiInsightContent">
+      <!-- AI Suggestions will go here -->
+    </div>
+  </div>
+
+  <!-- Modal for Sending Email -->
+  <div id="emailModal" class="fixed inset-0 bg-gray-800 bg-opacity-50 flex justify-center items-center hidden">
+    <div class="bg-white rounded-lg p-6 max-w-lg w-full">
+      <h2 class="text-xl font-semibold mb-4">HR Email Message</h2>
+      <textarea id="emailMessage" class="w-full p-3 border rounded mb-4 shadow-sm focus:outline-none focus:ring-2 focus:ring-purple-500" rows="6">
+Dear [Employee Name],
+
+We are pleased to inform you about your growth plan and the assessment of your current competencies. Please review the details below:
+
+[Competency Area: Technical Skills, Safety Skills, Leadership, etc.]
+Proficiency: [Your proficiency level]
+
+Development Goals:
+[Development goals]
+
+Training Needs:
+[Training needs]
+
+We encourage you to continue your professional growth and make use of the resources available to you.
+
+Best regards,
+HR Team
+      </textarea>
+      <div class="flex justify-end space-x-4">
+        <button onclick="closeEmailModal()" class="bg-gray-500 text-white px-4 py-2 rounded">Cancel</button>
+        <button onclick="sendEmail()" class="bg-purple-600 text-white px-4 py-2 rounded">Send Email</button>
+      </div>
+    </div>
+  </div>
+
+</main>
+<!-- Footer -->
+<footer class="bg-gray-800 text-white text-sm py-10 mt-10">
+    <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-8">
+      <div>
+        <p class="mb-1">📞 US: 0946-480-0207 | Landline: 1300 886 688</p>
+        <p class="mb-1">📞 PH: 0900 005 486 | Landline: 0800 014 8941</p>
+        <p>📍 Bestlink College, Quezon City, Metro Manila</p>
+      </div>
+      <div class="md:text-right space-y-2">
+        <a href="#" class="block hover:underline">Privacy Policy</a>
+        <a href="#" class="block hover:underline">Terms & Conditions</a>
+        <a href="#" class="block hover:underline">Trust Centre</a>
+        <p class="text-xs text-gray-400 mt-4">&copy; 2025 MedForce Hospital HR. All rights reserved.</p>
+      </div>
+    </div>
+<script>
+       // Toggle Sidebar
+       function openSidebar() {
+      document.getElementById('sidebar').style.width = "250px";
+    }
+
+    function closeSidebar() {
+      document.getElementById('sidebar').style.width = "0";
+    }
+  // Function to handle opening the email modal
+  function openEmailModal() {
+    const name = document.getElementById("employeeName").value.trim();
+    const task = document.getElementById("taskInput").value.trim();
+    const department = document.getElementById("department").value;
+    const proficiencyRadios = document.querySelectorAll('input[name="proficiency"]');
+    let proficiency = '';
+    proficiencyRadios.forEach(r => {
+      if (r.checked) proficiency = r.value;
+    });
+
+    let emailMessage = `
+Dear ${name},
+
+We are pleased to inform you about your growth plan and the assessment of your current competencies. Please review the details below:
+
+Competency Area: ${department} 
+Proficiency: ${proficiency}
+
+Development Goals:
+${task}
+
+We encourage you to continue your professional growth and make use of the resources available to you.
+
+Best regards,
+HR Team
+    `;
+
+    // Pre-fill the email message in the modal
+    document.getElementById("emailMessage").value = emailMessage;
+    document.getElementById("emailModal").classList.remove('hidden');
+  }
+
+  // Function to close the email modal
+  function closeEmailModal() {
+    document.getElementById("emailModal").classList.add('hidden');
+  }
+
+  // Function to send the email
+  function sendEmail() {
+    const emailBody = document.getElementById("emailMessage").value.trim();
+    const emailSubject = "Employee Growth Plan and Development";
+
+    // Open default mail client with pre-filled message
+    window.location.href = `mailto:?subject=${encodeURIComponent(emailSubject)}&body=${encodeURIComponent(emailBody)}`;
+
+    // Close the modal after sending email
+    closeEmailModal();
+  }
+
+  // Function to handle adding employee data to the skills matrix
+  document.getElementById("addToMatrixBtn").addEventListener("click", function() {
+    const name = document.getElementById("employeeName").value.trim();
+    const department = document.getElementById("department").value;
+    const skill = document.getElementById("skillCategory").value;
+    const proficiencyRadios = document.querySelectorAll('input[name="proficiency"]');
+    let proficiency = '';
+    proficiencyRadios.forEach(r => {
+      if (r.checked) proficiency = r.value;
+    });
+
+    // Validate inputs
+    if (!name || department === "Select Department" || !proficiency) {
+      alert("Please fill in all required fields.");
+      return;
+    }
+
+    // Insert the data into the Employee Skills Matrix table
+    const tableBody = document.getElementById("matrixTableBody");
+    const row = document.createElement("tr");
+    row.classList.add("border-t");
+
+    row.innerHTML = `
+      <td class="px-4 py-2 flex items-center space-x-2">
+        <img src="https://via.placeholder.com/32" class="rounded-full" />
+        <div>
+          <div class="font-medium">${name}</div>
+          <div class="text-gray-500 text-xs">${name.toLowerCase().replace(" ", "") + "@gmail.com"}</div>
+        </div>
+      </td>
+      <td class="px-4 py-2 text-green-600 font-semibold">${department}</td>
+      <td class="px-4 py-2 w-48">
+        <div class="w-full bg-gray-200 h-3 rounded-full">
+          <div class="bg-blue-500 h-3 rounded-full" style="width: 51%"></div>
+        </div>
+        <div class="text-xs mt-1">51%</div>
+      </td>
+      <td class="px-4 py-2 w-48">
+        <div class="w-full bg-gray-200 h-3 rounded-full">
+          <div class="bg-green-500 h-3 rounded-full" style="width: 68%"></div>
+        </div>
+        <div class="text-xs mt-1">68%</div>
+      </td>
+      <td class="px-4 py-2 w-48">
+        <div class="w-full bg-gray-200 h-3 rounded-full">
+          <div class="bg-purple-500 h-3 rounded-full" style="width: 53%"></div>
+        </div>
+        <div class="text-xs mt-1">53%</div>
+      </td>
+      <td class="px-4 py-2 text-center space-x-2">
+        <button class="bg-green-500 hover:bg-green-600 text-white p-1 rounded-full">✓</button>
+        <button class="bg-purple-500 hover:bg-purple-600 text-white p-1 rounded-full" onclick="openAiInsightPanel()">i</button>
+      </td>
+    `;
+    
+    tableBody.appendChild(row);
+
+    // Clear the form after adding to the matrix
+    document.getElementById("employeeName").value = '';
+    document.getElementById("department").value = 'Select Department';
+    document.getElementById("skillCategory").value = 'Technical Skills';
+    proficiencyRadios.forEach(r => r.checked = false);
+  });
+
+  // Function to open the AI Insight panel
+  function openAiInsightPanel() {
+    const insightContent = `
+      <h3 class="text-lg font-semibold">AI Suggestions to Improve Performance</h3>
+      <p class="text-sm">Based on the recent skills matrix, here are suggestions for further development:</p>
+      <ul class="list-disc pl-5 text-sm space-y-2">
+        <li>Strengthen communication skills by attending workshops and practicing active listening.</li>
+        <li>Enhance leadership capabilities by leading small teams and taking on mentoring roles.</li>
+        <li>Improve technical skills through online courses and on-the-job training sessions.</li>
+      </ul>
+      <button onclick="closeAiPanel()" class="bg-red-600 text-white px-4 py-2 rounded mt-4">Close</button>
+    `;
+    document.getElementById("aiInsightContent").innerHTML = insightContent;
+    document.getElementById("aiPanel").classList.remove("translate-x-full");
+  }
+
+  // Function to close the AI Insight panel
+  function closeAiPanel() {
+    document.getElementById("aiPanel").classList.add("translate-x-full");
+  }
+</script>
+
+</body>
+</html>

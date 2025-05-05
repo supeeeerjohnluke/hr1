@@ -1,0 +1,179 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Hospital Job Openings</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
+  <style>
+    .sidebar {
+      height: 100%; width: 0; position: fixed; z-index: 50;
+      top: 0; left: 0; background-color: #111;
+      overflow-x: hidden; transition: 0.5s; padding-top: 60px;
+    }
+    .sidebar a { padding: 10px 15px; font-size: 18px; color: #f1f1f1; display: block; transition: 0.3s; }
+    .sidebar a:hover { color: #f39c12; }
+    .sidebar-avatar { width: 80px; height: 80px; border-radius: 50%; margin: 0 auto 20px; display: block; }
+    .closebtn { position: absolute; top: 20px; right: 25px; font-size: 36px; }
+    .nav-avatar { width: 50px; height: 50px; border-radius: 50%; }
+  </style>
+</head>
+<body class="bg-gray-100 font-sans">
+
+<!-- Sidebar -->
+<div id="sidebar" class="sidebar">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeSidebar()">&times;</a>
+  <img src="1.jpg" alt="Avatar" class="sidebar-avatar" />
+  <h2 class="text-center text-white font-bold text-xl">Hospital Management</h2>
+  <a href="hr.html"><i class="fas fa-home mr-2"></i> Home</a>
+  <li><a href="hiring.html" class="hover:text-yellow-400"><i class="fas fa-briefcase-medical mr-1"></i> Careers</a></li>
+
+  <a href="contact.html"><i class="fas fa-phone mr-2"></i> Contact</a>
+  <a href="About.html"><i class="fas fa-info-circle mr-2"></i> About</a>
+  <a href="login.html"><i class="fas fa-sign-in-alt mr-2"></i> Login</a>
+</div>
+
+<!-- Navbar -->
+<nav class="bg-gray-900 p-4">
+  <div class="flex items-center justify-between">
+    <div class="flex items-center">
+      <img src="1.jpg" alt="Logo" class="nav-avatar mr-4" />
+      <button class="text-white text-xl" onclick="openSidebar()">
+        <i class="fas fa-bars"></i> Hospital Management
+      </button>
+    </div>
+    <ul class="flex space-x-5 text-white">
+      <li><a href="hr.html" class="hover:text-yellow-400"><i class="fas fa-home mr-1"></i> Home</a></li>
+      <li><a href="hiring.html" class="hover:text-yellow-400"><i class="fas fa-briefcase-medical mr-1"></i> Careers</a></li>
+      <li><a href="contact.html" class="hover:text-yellow-400"><i class="fas fa-phone mr-1"></i> Contact</a></li>
+      <li><a href="About.html" class="hover:text-yellow-400"><i class="fas fa-info-circle mr-1"></i> About</a></li>
+      <li><a href="login.html" class="hover:text-yellow-400"><i class="fas fa-sign-in-alt mr-1"></i> Login</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Job Listings -->
+<div class="max-w-5xl mx-auto px-4 py-10">
+  <div class="flex justify-between items-center mb-8">
+    <h1 class="text-3xl font-bold">🏥 Hospital Job Openings</h1>
+    <span id="jobCount" class="text-sm text-blue-600"></span>
+  </div>
+  <div id="jobList" class="space-y-6"></div>
+</div>
+
+<!-- Application Modal -->
+<div id="applyModal" class="fixed inset-0 bg-black bg-opacity-40 flex items-center justify-center z-50 hidden">
+  <div class="bg-white w-[95%] sm:w-11/12 md:w-4/5 lg:w-3/5 xl:w-2/5 max-w-3xl rounded-2xl shadow-2xl p-6 relative overflow-y-auto max-h-[90vh]">
+    <button onclick="closeModal()" class="absolute top-3 right-4 text-gray-400 hover:text-gray-700 text-2xl">&times;</button>
+    <h2 class="text-2xl font-semibold mb-6 text-center">Apply for Position</h2>
+    <form id="applicationForm" class="space-y-4">
+      <input type="hidden" id="jobTitle" name="jobTitle">
+
+      <div>
+        <label for="fullname" class="block font-medium mb-1">Full Name</label>
+        <input type="text" id="fullname" required class="w-full p-3 border rounded-lg" placeholder="John Doe">
+      </div>
+      <div>
+        <label for="email" class="block font-medium mb-1">Email Address</label>
+        <input type="email" id="email" required class="w-full p-3 border rounded-lg" placeholder="john@example.com">
+      </div>
+      <div>
+        <label for="phone" class="block font-medium mb-1">Phone Number</label>
+        <input type="tel" id="phone" required class="w-full p-3 border rounded-lg" placeholder="(123) 456-7890">
+      </div>
+      <div>
+        <label for="resume" class="block font-medium mb-1">Upload Resume</label>
+        <input type="file" id="resume" accept=".pdf,.doc,.docx" class="w-full p-3 border rounded-lg">
+      </div>
+      <div>
+        <label for="coverletter" class="block font-medium mb-1">Cover Letter</label>
+        <textarea id="coverletter" rows="4" class="w-full p-3 border rounded-lg" placeholder="Write something..."></textarea>
+      </div>
+      <div>
+        <label for="employmentType" class="block font-medium mb-1">Employment Type</label>
+        <select id="employmentType" required class="w-full p-3 border rounded-lg">
+          <option value="" disabled selected>Select type</option>
+          <option value="Full-Time">Full-Time</option>
+          <option value="Part-Time">Part-Time</option>
+          <option value="OJT">OJT</option>
+        </select>
+      </div>
+
+      <button type="submit" class="w-full bg-blue-600 text-white px-6 py-3 rounded-lg hover:bg-blue-700 transition">
+        Submit Application
+      </button>
+    </form>
+  </div>
+</div>
+
+<!-- Scripts -->
+<script>
+  const jobs = [
+    { title: "Doctor - General Medicine (Manila)", type: "Onsite", department: "Medical", location: "Manila", posted: "3 days ago", image: "https://img.icons8.com/color/96/doctor-male.png" },
+    { title: "Nurse - Pediatrics (Cebu)", type: "Hybrid", department: "Healthcare", location: "Cebu", posted: "2 days ago", image: "https://img.icons8.com/color/96/nurse-female.png" },
+    { title: "HR Admin Officer (Davao)", type: "Remote", department: "Administration", location: "Davao", posted: "1 day ago", image: "https://img.icons8.com/color/96/administrator-male.png" },
+    { title: "General Hospital Staff (Taguig)", type: "Onsite", department: "Support", location: "Taguig", posted: "Posted today", image: "https://img.icons8.com/color/96/hospital-room.png" }
+  ];
+
+  const jobList = document.getElementById("jobList");
+  const jobCount = document.getElementById("jobCount");
+  jobCount.textContent = `${jobs.length} job openings`;
+
+  jobs.forEach(job => {
+    const card = document.createElement("div");
+    card.className = "bg-white p-5 rounded-xl shadow-md hover:shadow-xl transition";
+    card.innerHTML = `
+      <div class="flex items-center space-x-4">
+        <img src="${job.image}" alt="Job" class="w-16 h-16 rounded-md flex-shrink-0">
+        <div class="flex-1">
+          <div class="flex justify-between items-start">
+            <div>
+              <h2 class="text-lg font-semibold text-emerald-700">${job.title}</h2>
+              <p class="text-sm text-gray-600"><span class="font-semibold">${job.type}</span> · ${job.department}</p>
+              <p class="text-sm text-gray-500 mt-1">${job.location}</p>
+            </div>
+            <div class="text-sm text-gray-400">${job.posted}</div>
+          </div>
+          <div class="text-right mt-4">
+            <button onclick="openModal('${job.title}')" class="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600">Apply Now</button>
+          </div>
+        </div>
+      </div>
+    `;
+    jobList.appendChild(card);
+  });
+
+  function openSidebar() {
+    document.getElementById("sidebar").style.width = "250px";
+  }
+
+  function closeSidebar() {
+    document.getElementById("sidebar").style.width = "0";
+  }
+
+  function openModal(title) {
+    document.getElementById("jobTitle").value = title;
+    document.getElementById("applyModal").classList.remove("hidden");
+  }
+
+  function closeModal() {
+    document.getElementById("applyModal").classList.add("hidden");
+  }
+
+  document.getElementById("applicationForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+    Swal.fire({
+      icon: 'success',
+      title: 'Application Submitted!',
+      text: 'We have received your application.',
+      confirmButtonColor: '#3085d6',
+    });
+    closeModal();
+    this.reset();
+  });
+</script>
+
+</body>
+</html>

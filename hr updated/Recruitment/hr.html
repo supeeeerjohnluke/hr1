@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HR MANAGEMENT</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
+  <style>
+    .sidebar {
+      height: 100%;
+      width: 0;
+      position: fixed;
+      z-index: 50;
+      top: 0;
+      left: 0;
+      background-color: #111;
+      overflow-x: hidden;
+      transition: 0.5s;
+      padding-top: 60px;
+    }
+    .sidebar a {
+      padding: 10px 15px;
+      text-decoration: none;
+      font-size: 18px;
+      color: #f1f1f1;
+      display: block;
+      transition: 0.3s;
+    }
+    .sidebar a:hover {
+      color: #f39c12;
+    }
+    .sidebar-avatar {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      display: block;
+      margin: 0 auto 20px;
+    }
+    .closebtn {
+      position: absolute;
+      top: 20px;
+      right: 25px;
+      font-size: 36px;
+    }
+    .nav-avatar {
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+    }
+  </style>
+</head>
+<body class="bg-gray-100 font-sans">
+
+<!-- Sidebar -->
+<div id="sidebar" class="sidebar">
+  <a href="javascript:void(0)" class="closebtn" onclick="closeSidebar()">&times;</a>
+  <img src="1.jpg" alt="Avatar" class="sidebar-avatar" />
+  <h2 class="text-center text-white font-bold text-xl">Hospital Management</h2>
+  <a href="hr.html" class="hover:bg-gray-700"><i class="fas fa-home mr-2"></i> Home</a>
+  <a href="hiring.html"><i class="fas fa-briefcase-medical mr-3"></i>Careers</a>
+  <a href="contact.html" class="hover:bg-gray-700"><i class="fas fa-phone mr-2"></i> Contact</a>
+  <a href="About.html" class="hover:bg-gray-700"><i class="fas fa-info-circle mr-2"></i> About</a>
+  <a href="login.html" class="hover:bg-gray-700"><i class="fas fa-sign-in-alt mr-2"></i> Login</a>
+</div>
+
+<!-- Navbar -->
+<nav class="bg-gray-900 p-4">
+  <div class="flex items-center justify-between">
+    <div class="flex items-center">
+      <img src="1.jpg" alt="Logo" class="nav-avatar mr-4" />
+      <button class="text-white text-xl" onclick="openSidebar()">
+        <i class="fas fa-bars"></i> Hospital Management
+      </button>
+    </div>
+    <ul class="flex items-center space-x-5">
+      <li><a href="hr.html" class="text-white hover:text-yellow-400"><i class="fas fa-home mr-1"></i> Home</a></li>
+      <li><a href="hiring.html" class="hover:text-yellow-400"><i class="fas fa-briefcase-medical mr-1"></i> Careers</a></li>
+      <li><a href="contact.html" class="text-white hover:text-yellow-400"><i class="fas fa-phone mr-1"></i> Contact</a></li>
+      <li><a href="About.html" class="text-white hover:text-yellow-400"><i class="fas fa-info-circle mr-1"></i> About</a></li>
+      <li><a href="login.html" class="text-white hover:text-yellow-400"><i class="fas fa-sign-in-alt mr-1"></i> Login</a></li>
+    </ul>
+  </div>
+</nav>
+
+<!-- Hero Section -->
+<main class="max-w-7xl mx-auto p-8 grid md:grid-cols-2 gap-6 items-center">
+  <div>
+    <h2 class="text-4xl font-bold mb-4">We’re Ready When You Are</h2>
+    <p class="text-lg mb-6">Empowering doctors, nurses, and healthcare professionals, guard, cleaner etc.</p>
+    <div class="space-x-4">
+      <button class="bg-red-500 text-white px-5 py-2 rounded-full hover:bg-red-600">Take a Tour</button>
+      <a href="hiring.html" class="bg-blue-500 text-white px-5 py-2 rounded-full hover:bg-blue-600 inline-block">Enquire Now</a>
+    </div>
+  </div>
+  <div>
+    <img src="1.jpg" alt="Hospital HR team" class="w-full h-auto max-h-[500px] object-cover rounded-xl shadow-lg" />
+  </div>
+</main>
+
+<!-- Features Section -->
+<section class="bg-white py-16 px-6">
+  <div class="max-w-7xl mx-auto grid md:grid-cols-3 gap-8 text-center">
+    <div>
+      <h3 class="text-xl font-bold text-yellow-500 mb-2">✔ Staff Records & Compliance</h3>
+      <p>Maintain up-to-date staff profiles with built-in tracking and alerts for regulations.</p>
+    </div>
+    <div>
+      <h3 class="text-xl font-bold text-purple-500 mb-2">✔ Self-Service Portals</h3>
+      <p>Enable staff to manage certifications, leave, and schedules independently.</p>
+    </div>
+    <div>
+      <h3 class="text-xl font-bold text-orange-500 mb-2">✔ Workforce Analytics</h3>
+      <p>Access real-time HR data to optimize staffing and operational decisions.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Contact Section -->
+<section class="bg-white py-16 px-6" id="contact">
+  <div class="max-w-7xl mx-auto grid md:grid-cols-2 gap-10">
+    <div>
+      <iframe 
+        class="w-full h-80 rounded-lg shadow-md"
+        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3858.7165405465876!2d121.03909907413545!3d14.72861138577303!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3397b05657720dfb%3A0x7a7efa0f0a24a9be!2sBestlink%20College%20of%20the%20Philippines!5e0!3m2!1sen!2sph!4v1743923144466!5m2!1sen!2sph"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        allowfullscreen>
+      </iframe>
+    </div>
+
+    <form action="https://formspree.io/f/xzbowpjq" method="POST" class="bg-gray-100 p-8 rounded-xl shadow-lg">
+      <h2 class="text-2xl font-bold mb-4">Contact Us</h2>
+      <input type="text" name="name" placeholder="Name" required class="w-full p-3 mb-4 rounded border border-gray-300">
+      <input type="email" name="email" placeholder="Email" required class="w-full p-3 mb-4 rounded border border-gray-300">
+      <textarea name="message" rows="5" placeholder="Your message..." required class="w-full p-3 mb-4 rounded border border-gray-300"></textarea>
+      <button type="submit" class="w-full bg-orange-600 text-white p-3 rounded hover:bg-orange-700">Send Message</button>
+    </form>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="bg-gray-800 text-white text-sm py-10 mt-10">
+  <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-8">
+    <div>
+      <div class="mb-4 space-y-1">
+        <p class="flex items-center"><span class="mr-2">📞</span>US: 0946-480-0207 | Landline: 1300 886 688</p>
+        <p class="flex items-center"><span class="mr-2">📞</span>PH: 0900 005 486 | Landline: 0800 014 8941</p>
+      </div>
+      <p class="flex items-start">
+        <span class="mr-2 mt-1">📍</span>
+        Bestlink College of the Philippines, Quirino Hwy, Novaliches, Quezon City, Metro Manila
+      </p>
+    </div>
+    <div class="md:text-right space-y-2">
+      <a href="#" class="hover:underline block">Privacy Policy</a>
+      <a href="#" class="hover:underline block">Terms & Conditions</a>
+      <a href="#" class="hover:underline block">Trust Centre</a>
+      <p class="text-xs mt-4 text-gray-400">&copy; 2025 MedForce Hospital HR. All rights reserved.</p>
+    </div>
+  </div>
+</footer>
+
+<!-- Scripts -->
+<script>
+  function openSidebar() {
+    document.getElementById("sidebar").style.width = "250px";
+  }
+
+  function closeSidebar() {
+    document.getElementById("sidebar").style.width = "0";
+  }
+</script>
+
+</body>
+</html>

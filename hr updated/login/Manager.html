@@ -1,0 +1,233 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Manager Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex">
+
+  <!-- Sidebar -->
+  <aside class="w-64 bg-white shadow-xl p-6">
+    <h2 class="text-3xl font-bold text-blue-700 mb-10">Manager Menu</h2>
+    <nav class="space-y-5 text-lg">
+      <button onclick="showSection('dashboard')" class="block text-left w-full hover:text-blue-600">Dashboard</button>
+      <button onclick="showSection('timeclock')" class="block text-left w-full hover:text-blue-600">Time Records</button>
+      <button onclick="showSection('schedule')" class="block text-left w-full hover:text-blue-600">Employee Schedule</button>
+      <button onclick="showSection('tasks')" class="block text-left w-full hover:text-blue-600">Employee Tasks</button>
+      <button onclick="showSection('request')" class="block text-left w-full hover:text-blue-600">Requests</button>
+      <button onclick="showSection('evaluation')" class="block text-left w-full hover:text-blue-600">Performance Evaluation</button>
+      <button onclick="logout()" class="block text-left w-full text-red-600 hover:text-red-800">Logout</button>
+    </nav>
+  </aside>
+
+  <!-- Main Content -->
+  <main class="flex-1 p-10 space-y-10">
+
+    <!-- Dashboard -->
+    <section id="dashboard" class="hidden">
+      <h2 class="text-3xl font-semibold text-blue-700 mb-6">Dashboard</h2>
+      <p>Welcome to the manager dashboard.</p>
+    </section>
+
+    <!-- Timeclock -->
+    <section id="timeclock">
+      <h2 class="text-3xl font-semibold text-blue-700 mb-6">Employee Time Records</h2>
+      <input type="text" id="searchInput" placeholder="Search by name or department" class="mb-4 p-3 border rounded w-full" oninput="renderTable()">
+      <div class="mb-4">
+        <label class="block mb-2 text-gray-700">Sort by:</label>
+        <select id="sortOption" class="border p-2 rounded" onchange="renderTable()">
+          <option value="name">Name</option>
+          <option value="department">Department</option>
+          <option value="total">Total Hours</option>
+          <option value="status">Status</option>
+        </select>
+      </div>
+      <div id="tablesContainer" class="space-y-10"></div>
+    </section>
+
+    <!-- Schedule -->
+    <section id="schedule" class="hidden">
+      <h2 class="text-3xl font-semibold text-blue-700 mb-6">Employee Schedule</h2>
+      <p>Schedule view coming soon...</p>
+    </section>
+
+    <!-- Tasks -->
+    <section id="tasks" class="hidden">
+      <h2 class="text-3xl font-semibold text-blue-700 mb-6">Employee Tasks</h2>
+      <p>Tasks management coming soon...</p>
+    </section>
+
+    <!-- Requests -->
+    <section id="request" class="hidden">
+      <h2 class="text-3xl font-semibold text-blue-700 mb-6">Requests</h2>
+      <p>Requests interface coming soon...</p>
+    </section>
+
+    <!-- Evaluation -->
+    <section id="evaluation" class="hidden">
+      <h2 class="text-3xl font-semibold text-blue-700 mb-4">Performance Evaluation</h2>
+      <form class="bg-white p-6 rounded shadow space-y-4">
+        <input type="text" placeholder="Employee Name" class="w-full border p-3 rounded" id="evalName" />
+        <input type="number" placeholder="Work Quality (1-10)" class="w-full border p-3 rounded" />
+        <input type="number" placeholder="Punctuality (1-10)" class="w-full border p-3 rounded" />
+        <input type="number" placeholder="Teamwork (1-10)" class="w-full border p-3 rounded" />
+        <textarea placeholder="Remarks" class="w-full p-4 border rounded"></textarea>
+        <button type="submit" class="bg-green-600 text-white px-6 py-2 rounded hover:bg-green-700">Submit Evaluation</button>
+      </form>
+    </section>
+
+    <!-- Logout -->
+    <section id="logoutMsg" class="hidden">
+      <h2 class="text-3xl font-semibold text-red-600 mb-6">You have been logged out.</h2>
+    </section>
+
+  </main>
+
+  <!-- Scripts -->
+  <script>
+    const sections = ['dashboard', 'timeclock', 'schedule', 'tasks', 'request', 'evaluation', 'logoutMsg'];
+
+    function showSection(id) {
+      sections.forEach(sec => document.getElementById(sec)?.classList.add('hidden'));
+      document.getElementById(id)?.classList.remove('hidden');
+    }
+
+    function logout() {
+      showSection('logoutMsg');
+    }
+
+    const timeData = [
+      { date: '2025-05-03', name: 'Jane Doe', department: 'Doctor', in: '09:15', out: '17:10' },
+      { date: '2025-05-03', name: 'John Smith', department: 'Nurse', in: '08:00', out: '16:00' },
+      { date: '2025-05-03', name: 'Alice Reyes', department: 'Staff', in: '—', out: '—' },
+      { date: '2025-05-03', name: 'Carlos Dela Cruz', department: 'Doctor', in: '07:45', out: '17:30' }
+    ];
+
+    function parseTime(t) {
+      if (t.includes(':')) {
+        const [h, m] = t.split(':').map(Number);
+        return [h, m];
+      }
+      return [0, 0];
+    }
+
+    function computeHours(timeIn, timeOut) {
+      if (timeIn === '—' || timeOut === '—') return { total: 0, overtime: 0 };
+      const [inH, inM] = parseTime(timeIn);
+      const [outH, outM] = parseTime(timeOut);
+      const start = new Date(0, 0, 0, inH, inM);
+      const end = new Date(0, 0, 0, outH, outM);
+      let diff = (end - start) / (1000 * 60 * 60);
+      diff = diff < 0 ? 0 : diff;
+      const overtime = diff > 8 ? diff - 8 : 0;
+      return { total: diff, overtime };
+    }
+
+    function getStatus(timeIn, timeOut) {
+      if (timeIn === '—' || timeOut === '—') return 'Absent';
+      const [h] = parseTime(timeIn);
+      return h > 9 ? 'Late' : h === 9 ? 'Ontime' : 'Early';
+    }
+
+    function evaluateEmployee(name) {
+      alert(`Redirecting to Performance Evaluation for ${name}`);
+      showSection('evaluation');
+    }
+
+    function sendWarning(name) {
+      alert(`⚠️ Warning sent to ${name}`);
+    }
+
+    function updateTime(index) {
+      const newIn = prompt("Enter new Time In (HH:MM):", timeData[index].in);
+      const newOut = prompt("Enter new Time Out (HH:MM):", timeData[index].out);
+      if (newIn && newOut) {
+        timeData[index].in = newIn;
+        timeData[index].out = newOut;
+        renderTable();
+        alert("✅ Time record updated.");
+      }
+    }
+
+    function renderTable() {
+      const keyword = document.getElementById('searchInput').value.toLowerCase();
+      const sortKey = document.getElementById('sortOption').value;
+      const container = document.getElementById('tablesContainer');
+      container.innerHTML = '';
+
+      const departments = [...new Set(timeData.map(row => row.department))];
+
+      departments.forEach(dept => {
+        const section = document.createElement('div');
+        const heading = document.createElement('h3');
+        heading.className = 'text-2xl font-semibold text-blue-700 mb-2';
+        heading.innerText = dept + ' Department';
+        section.appendChild(heading);
+
+        const table = document.createElement('table');
+        table.className = 'w-full table-auto bg-white rounded-lg shadow';
+        table.innerHTML = `
+          <thead class="bg-blue-100 text-left text-gray-700">
+            <tr>
+              <th class="p-4">Date</th>
+              <th class="p-4">Name</th>
+              <th class="p-4">Time In</th>
+              <th class="p-4">Time Out</th>
+              <th class="p-4">Total Hours</th>
+              <th class="p-4">Overtime</th>
+              <th class="p-4">Status</th>
+              <th class="p-4">Action</th>
+            </tr>
+          </thead>
+          <tbody class="text-gray-600"></tbody>
+        `;
+
+        const tbody = table.querySelector('tbody');
+
+        let filtered = timeData.filter(row =>
+          row.department === dept &&
+          (row.name.toLowerCase().includes(keyword) || row.department.toLowerCase().includes(keyword))
+        );
+
+        filtered.sort((a, b) => {
+          const aVal = sortKey === 'total' ? computeHours(a.in, a.out).total : (a[sortKey]?.toLowerCase?.() || '');
+          const bVal = sortKey === 'total' ? computeHours(b.in, b.out).total : (b[sortKey]?.toLowerCase?.() || '');
+          if (typeof aVal === 'number' && typeof bVal === 'number') return aVal - bVal;
+          return aVal > bVal ? 1 : -1;
+        });
+
+        filtered.forEach((row, index) => {
+          const hours = computeHours(row.in, row.out);
+          const status = getStatus(row.in, row.out);
+
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td class="p-4">${row.date}</td>
+            <td class="p-4">${row.name}</td>
+            <td class="p-4">${row.in}</td>
+            <td class="p-4">${row.out}</td>
+            <td class="p-4">${hours.total.toFixed(2)}</td>
+            <td class="p-4">${hours.overtime.toFixed(2)}</td>
+            <td class="p-4">${status}</td>
+            <td class="p-4 space-x-1">
+              <button onclick="evaluateEmployee('${row.name}')" class="bg-green-500 text-white px-3 py-1 rounded hover:bg-green-600">Evaluate</button>
+              <button onclick="sendWarning('${row.name}')" class="bg-yellow-500 text-white px-3 py-1 rounded hover:bg-yellow-600">Warning</button>
+              <button onclick="updateTime(${index})" class="bg-blue-500 text-white px-3 py-1 rounded hover:bg-blue-600">Update</button>
+            </td>
+          `;
+          tbody.appendChild(tr);
+        });
+
+        section.appendChild(table);
+        container.appendChild(section);
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderTable();
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HR MANAGEMENT</title>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+    <style>
+        .sidebar {
+            height: 100%;
+            width: 0;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: #111;
+            overflow-x: hidden;
+            transition: 0.5s;
+            padding-top: 60px;
+        }
+
+        .sidebar a {
+            padding: 10px 15px;
+            text-decoration: none;
+            font-size: 18px;
+            color: #f1f1f1;
+            display: block;
+            transition: 0.3s;
+        }
+
+        .sidebar a:hover {
+            color: #f39c12;
+        }
+
+        .sidebar-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            display: block;
+            margin: 0 auto 20px;
+        }
+
+        .closebtn {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            font-size: 36px;
+        }
+
+        .nav-avatar {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+        }
+    </style>
+</head>
+<body class="bg-gray-100 font-sans">
+
+<!-- Sidebar -->
+<div id="sidebar" class="sidebar">
+    <a href="javascript:void(0)" class="closebtn" onclick="closeSidebar()">&times;</a>
+    <img src="1.jpg" alt="Avatar" class="sidebar-avatar">
+    <h2 class="text-center text-white font-bold text-xl">Hospital Management</h2>
+    <a href="hr.html" class="hover:bg-gray-700"><i class="fas fa-home mr-2"></i> Home</a>
+    <a href="contact.html" class="hover:bg-gray-700"><i class="fas fa-phone mr-2"></i> Contact</a>
+    <a href="About.html" class="hover:bg-gray-700"><i class="fas fa-info-circle mr-2"></i> About</a>
+    <a href="login.html" class="hover:bg-gray-700"><i class="fas fa-sign-in-alt mr-2"></i> Login</a>
+</div>
+
+<!-- Navbar -->
+<nav class="bg-gray-900 p-4">
+    <div class="flex items-center justify-between">
+        <div class="flex items-center">
+            <img src="1.jpg" alt="Logo" class="nav-avatar mr-4">
+            <button class="text-white text-xl" onclick="openSidebar()">
+                <i class="fas fa-bars"></i> Hospital Management
+            </button>
+        </div>
+        <ul class="flex items-center space-x-5">
+            <li><a href="hr.html" class="text-white hover:text-yellow-400"><i class="fas fa-home mr-1"></i> Home</a></li>
+            <li><a href="contact.html" class="text-white hover:text-yellow-400"><i class="fas fa-phone mr-1"></i> Contact</a></li>
+            <li><a href="About.html" class="text-white hover:text-yellow-400"><i class="fas fa-info-circle mr-1"></i> About</a></li>
+            <li><a href="login.html" class="text-white hover:text-yellow-400"><i class="fas fa-sign-in-alt mr-1"></i> Logoin</a></li>
+        </ul>
+    </div>
+</nav>
+</body>
+</html>
+
+  <!-- Main Form Section -->
+  <div class="container mx-auto px-4 py-10 flex flex-wrap justify-center gap-8">
+    <div class="max-w-md">
+      <h2 class="text-3xl font-bold mb-4">Apply for a Position</h2>
+      <p class="text-gray-700">Please fill out this form to apply for a hospital position. Select your desired role and type of inquiry.</p>
+    </div>
+
+    <div class="form-section w-full max-w-3xl">
+      <form id="inquiryForm" class="bg-white p-8 rounded-2xl shadow-xl space-y-6 transition-all duration-300 ease-in-out">
+        <h3 class="text-2xl font-bold text-gray-800 mb-2">📝 Inquiry Form</h3>
+
+        <div class="grid md:grid-cols-2 gap-6">
+          <div class="flex items-center border border-gray-300 rounded-lg px-3 py-2">
+            <i data-feather="user" class="text-gray-500 mr-2"></i>
+            <input type="text" name="firstName" placeholder="First Name*" required class="flex-1 focus:outline-none" />
+          </div>
+          <div class="flex items-center border border-gray-300 rounded-lg px-3 py-2">
+            <i data-feather="user" class="text-gray-500 mr-2"></i>
+            <input type="text" name="lastName" placeholder="Last Name*" required class="flex-1 focus:outline-none" />
+          </div>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-6">
+          <div class="flex items-center border border-gray-300 rounded-lg px-3 py-2">
+            <i data-feather="mail" class="text-gray-500 mr-2"></i>
+            <input type="email" name="email" placeholder="Email Address*" required class="flex-1 focus:outline-none" />
+          </div>
+          <div class="flex items-center border border-gray-300 rounded-lg px-3 py-2">
+            <i data-feather="phone" class="text-gray-500 mr-2"></i>
+            <input type="tel" name="phone" placeholder="Phone Number*" required class="flex-1 focus:outline-none" />
+          </div>
+        </div>
+
+        <div class="grid md:grid-cols-2 gap-6">
+          <div class="flex items-center border border-gray-300 rounded-lg px-3 py-2">
+            <i data-feather="briefcase" class="text-gray-500 mr-2"></i>
+            <select name="position" required class="flex-1 focus:outline-none text-gray-700">
+              <option value="">Select Position</option>
+              <option>Doctor</option>
+              <option>Nurse</option>
+              <option>Medical Technician</option>
+              <option>Administrative Staff</option>
+              <option>Cleaner</option>
+              <option>Security</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="flex items-center border border-gray-300 rounded-lg px-3 py-2">
+            <i data-feather="file-text" class="text-gray-500 mr-2"></i>
+            <select name="inquiryType" required class="flex-1 focus:outline-none text-gray-700">
+              <option value="">Type of Inquiry</option>
+              <option>Job Application</option>
+              <option>Internship</option>
+              <option>Volunteer Work</option>
+              <option>Training Program</option>
+              <option>General Inquiry</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="flex items-start border border-gray-300 rounded-lg px-3 py-2">
+          <i data-feather="message-circle" class="text-gray-500 mt-1 mr-2"></i>
+          <textarea name="message" placeholder="Additional message... (optional)" class="flex-1 focus:outline-none h-32 resize-none"></textarea>
+        </div>
+
+        <!-- Resume Upload -->
+        <div>
+          <label class="block text-sm font-semibold text-gray-700 mb-1">
+            📎 Insert Your Resume Here
+          </label>
+          <input type="file" name="resume" accept=".pdf,.doc,.docx" required class="w-full border border-gray-300 rounded px-3 py-2" />
+        </div>
+
+        <div class="text-right">
+          <button type="submit" class="bg-blue-600 hover:bg-white-700 text-white font-semibold py-3 px-8 rounded-full shadow-lg transition duration-300">
+            ✉️ Submit Inquiry
+          </button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <!-- Modal for Success -->
+  <div id="successModal" class="fixed inset-0 bg-black bg-opacity-40 flex justify-center items-center z-50 hidden">
+    <div class="bg-white p-6 rounded-lg shadow-lg text-center relative w-80">
+      <button onclick="closeModal()" class="absolute top-2 right-3 text-gray-500 hover:text-red-500 text-xl">&times;</button>
+      <div id="spinner" class="flex justify-center items-center mb-4">
+        <div class="w-8 h-8 border-4 border-purple-500 border-t-transparent rounded-full animate-spin"></div>
+      </div>
+      <div id="successContent" class="hidden">
+        <h2 class="text-xl font-bold text-green-600 mb-2">Success!</h2>
+        <p class="text-gray-700">✅ Your Documents have been Recorded.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="bg-gray-800 text-white text-sm py-10 mt-10">
+    <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-8">
+      <div>
+        <p class="mb-2">📞 US: 0946-480-0207 | Landline: 1300 886 688</p>
+        <p class="mb-2">📞 PH: 0900 005 486 | Landline: 0800 014 8941</p>
+        <p class="mb-2">📍 Bestlink College of the Philippines, Quezon City, Metro Manila</p>
+      </div>
+      <div class="md:text-right space-y-2">
+        <a href="#" class="hover:underline block">Privacy Policy</a>
+        <a href="#" class="hover:underline block">Terms & Conditions</a>
+        <a href="#" class="hover:underline block">Trust Centre</a>
+        <p class="text-xs mt-4 text-gray-400">&copy; 2025 BSIT 3213 Hospital HR. All rights reserved.</p>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    feather.replace();
+
+    const modal = document.getElementById('successModal');
+    const spinner = document.getElementById('spinner');
+    const successContent = document.getElementById('successContent');
+
+    document.getElementById('inquiryForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+
+      const formData = new FormData(this);
+      let isValid = true;
+
+      for (let [_, value] of formData.entries()) {
+        if (value === '' || value === null) {
+          alert('Please fill in all required fields.');
+          isValid = false;
+          break;
+        }
+      }
+
+      if (isValid) {
+        modal.classList.remove('hidden');
+        spinner.classList.remove('hidden');
+        successContent.classList.add('hidden');
+
+        setTimeout(() => {
+          spinner.classList.add('hidden');
+          successContent.classList.remove('hidden');
+        }, 1300);
+
+        this.reset();
+      }
+    });
+
+    function closeModal() {
+      modal.classList.add('hidden');
+    }
+
+  function openSidebar() {
+    document.getElementById("sidebar").style.width = "250px";
+  }
+
+  function closeSidebar() {
+    document.getElementById("sidebar").style.width = "0";
+  }
+</script>
+</body>
+</html>

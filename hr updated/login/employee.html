@@ -1,0 +1,209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Employee Dashboard</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 min-h-screen flex">
+
+  <!-- Sidebar -->
+  <aside class="w-64 bg-white shadow-xl p-6">
+    <h2 class="text-3xl font-extrabold mb-10 text-blue-700">Menu</h2>
+    <nav class="space-y-6">
+      <a href="#" class="block text-xl font-medium text-gray-700 hover:text-blue-600" id="dashboardLink">Home</a>
+      <a href="#" class="block text-xl font-medium text-gray-700 hover:text-blue-600" id="profileLink">Profile</a>
+      <a href="#" class="block text-xl font-medium text-gray-700 hover:text-blue-600" id="onsiteLink">Timeclock</a>
+      <a href="#" class="block text-xl font-medium text-gray-700 hover:text-blue-600" id="scheduleLink">Schedule</a>
+      <a href="#" class="block text-xl font-medium text-gray-700 hover:text-blue-600" id="taskLink">Notification</a>
+      <a href="#" class="block text-xl font-medium text-gray-700 hover:text-blue-600" id="requestLink">Request</a>
+      <a href="#" class="block text-xl font-medium text-red-600 hover:text-red-800" id="logoutBtn">Logout</a>
+    </nav>
+  </aside>
+
+  <!-- Main Content -->
+  <div class="flex-1 p-10">
+    <div class="max-w-5xl mx-auto">
+
+      <!-- Logout Message -->
+      <div id="logoutMessage" class="hidden bg-white rounded-2xl shadow-xl p-10 text-center">
+        <h2 class="text-2xl font-bold text-red-600 mb-4">You have been logged out.</h2>
+        <p class="text-gray-700">Thank you for using the employee dashboard.</p>
+      </div>
+
+      <!-- Sections -->
+      <div id="dashboard" class="bg-white rounded-2xl shadow-xl p-8 mb-10">
+        <h1 class="text-4xl font-extrabold mb-4 text-blue-700">Welcome Users</h1>
+        <p class="text-gray-600 mb-6">Monitor your activity below:</p>
+        <div class="space-y-3">
+          <div>Last Clock-In: <span id="lastClockIn">–</span></div>
+          <div>Last Clock-Out: <span id="lastClockOut">–</span></div>
+          <div>First Clock-In: <span id="firstClockIn">–</span></div>
+          <div>Overtime: <span id="overtime">–</span></div>
+        </div>
+        <div class="mt-6">
+          <h3 class="text-xl font-semibold mb-2 text-gray-800">Time Records:</h3>
+          <ul id="timeLog" class="list-disc list-inside text-gray-600 space-y-1"></ul>
+        </div>
+      </div>
+
+      <div id="profile" class="bg-white rounded-2xl shadow-xl p-8 mb-10 hidden">
+        <h2 class="text-2xl font-semibold mb-6 text-blue-700">Profile</h2>
+        <form id="profileForm" class="space-y-6">
+          <input type="text" id="fullName" placeholder="Full Name" class="w-full p-4 border-2 border-gray-300 rounded-xl">
+          <input type="text" id="location" placeholder="Location" class="w-full p-4 border-2 border-gray-300 rounded-xl">
+          <input type="email" id="email" placeholder="Email" class="w-full p-4 border-2 border-gray-300 rounded-xl">
+          <input type="text" id="contact" placeholder="Contact" class="w-full p-4 border-2 border-gray-300 rounded-xl">
+          <input type="text" id="department" placeholder="Department" class="w-full p-4 border-2 border-gray-300 rounded-xl">
+          <button type="submit" class="w-full bg-green-600 text-white py-3 rounded-xl hover:bg-green-700">Save Profile</button>
+        </form>
+        <div class="mt-8">
+          <h3 class="text-xl font-semibold text-gray-700">Profile Info:</h3>
+          <ul id="profileInfo" class="list-disc list-inside text-gray-600 mt-2"></ul>
+        </div>
+      </div>
+
+      <div id="onsite" class="bg-white rounded-2xl shadow-xl p-8 mb-10 hidden">
+        <h2 class="text-2xl font-semibold mb-6 text-blue-700">Time Clock</h2>
+        <div class="space-y-3">
+          <div>Last Clock-In: <span id="lastClockIn2">–</span></div>
+          <div>Last Clock-Out: <span id="lastClockOut2">–</span></div>
+          <div>Overtime: <span id="overtime2">–</span></div>
+        </div>
+        <div class="mt-6 space-x-4">
+          <button onclick="handleClockIn()" class="bg-blue-500 text-white px-6 py-3 rounded hover:bg-blue-600">Clock In</button>
+          <button onclick="handleClockOut()" class="bg-red-500 text-white px-6 py-3 rounded hover:bg-red-600">Clock Out</button>
+        </div>
+
+        <div class="mt-6">
+          <label class="flex items-center gap-2">
+            <input type="checkbox" id="manualOvertimeCheck">
+            <span>Enter Overtime Manually</span>
+          </label>
+          <input type="number" id="manualOvertime" class="mt-2 p-2 border rounded w-full" placeholder="Overtime hours (if any)">
+        </div>
+      </div>
+
+      <div id="schedule" class="bg-white rounded-2xl shadow-xl p-8 mb-10 hidden">
+        <h2 class="text-2xl font-semibold text-blue-700 mb-4">Schedule</h2>
+        <p class="text-gray-600">Schedule functionality to be added.</p>
+      </div>
+
+      <div id="task" class="bg-white rounded-2xl shadow-xl p-8 mb-10 hidden">
+        <h2 class="text-2xl font-semibold text-blue-700 mb-4">Task</h2>
+        <p class="text-gray-600">Task functionality to be added.</p>
+      </div>
+
+      <div id="request" class="bg-white rounded-2xl shadow-xl p-8 mb-10 hidden">
+        <h2 class="text-2xl font-semibold text-blue-700 mb-6">Send Request to Manager</h2>
+        <form id="requestForm" class="space-y-4">
+          <textarea id="messageInput" rows="4" class="w-full p-4 border-2 border-gray-300 rounded-xl" placeholder="Enter your message..."></textarea>
+          <button type="submit" class="bg-blue-600 text-white py-2 px-6 rounded hover:bg-blue-700">Send Request</button>
+        </form>
+        <div class="mt-4">
+          <h3 class="text-xl font-semibold text-gray-800">Manager's Response:</h3>
+          <p id="managerResponse" class="text-gray-600 mt-2"></p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    const dashboard = document.getElementById('dashboard');
+    const profile = document.getElementById('profile');
+    const onsite = document.getElementById('onsite');
+    const schedule = document.getElementById('schedule');
+    const task = document.getElementById('task');
+    const request = document.getElementById('request');
+    const logoutMessage = document.getElementById('logoutMessage');
+
+    const links = {
+      dashboardLink: dashboard,
+      profileLink: profile,
+      onsiteLink: onsite,
+      scheduleLink: schedule,
+      taskLink: task,
+      requestLink: request
+    };
+
+    for (let id in links) {
+      document.getElementById(id).addEventListener('click', () => showSection(links[id]));
+    }
+
+    function showSection(section) {
+      [dashboard, profile, onsite, schedule, task, request, logoutMessage].forEach(s => s.classList.add('hidden'));
+      section.classList.remove('hidden');
+    }
+
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+      [dashboard, profile, onsite, schedule, task, request].forEach(s => s.classList.add('hidden'));
+      logoutMessage.classList.remove('hidden');
+    });
+
+    let clockInTime = null;
+
+    function handleClockIn() {
+      const now = new Date();
+      clockInTime = now;
+
+      const formatted = now.toLocaleTimeString();
+      document.getElementById('lastClockIn').textContent = formatted;
+      document.getElementById('lastClockIn2').textContent = formatted;
+      document.getElementById('firstClockIn').textContent = formatted;
+    }
+
+    function handleClockOut() {
+      const now = new Date();
+      const formattedOut = now.toLocaleTimeString();
+      const dateStr = now.toLocaleDateString();
+
+      document.getElementById('lastClockOut').textContent = formattedOut;
+      document.getElementById('lastClockOut2').textContent = formattedOut;
+
+      let overtime = 0;
+      const manualOTEnabled = document.getElementById('manualOvertimeCheck').checked;
+      const manualOT = parseFloat(document.getElementById('manualOvertime').value);
+
+      if (manualOTEnabled && !isNaN(manualOT)) {
+        overtime = manualOT;
+      } else if (clockInTime) {
+        const diff = (now - clockInTime) / 3600000;
+        overtime = diff > 8 ? (diff - 8).toFixed(2) : 0;
+      }
+
+      document.getElementById('overtime').textContent = `${overtime} hrs`;
+      document.getElementById('overtime2').textContent = `${overtime} hrs`;
+
+      const log = document.getElementById('timeLog');
+      const li = document.createElement('li');
+      li.textContent = `${dateStr} — In: ${clockInTime?.toLocaleTimeString() || '–'} | Out: ${formattedOut} | OT: ${overtime} hrs`;
+      log.appendChild(li);
+    }
+
+    document.getElementById('profileForm').addEventListener('submit', function (e) {
+      e.preventDefault();
+      const info = [
+        ['Name', document.getElementById('fullName').value],
+        ['Location', document.getElementById('location').value],
+        ['Email', document.getElementById('email').value],
+        ['Contact', document.getElementById('contact').value],
+        ['Department', document.getElementById('department').value]
+      ];
+      document.getElementById('profileInfo').innerHTML = info.map(([k, v]) => `<li><strong>${k}:</strong> ${v}</li>`).join('');
+    });
+
+    document.getElementById('requestForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const message = document.getElementById('messageInput').value.trim();
+      if (message) {
+        setTimeout(() => {
+          document.getElementById('managerResponse').textContent = `Manager Response: \"Thanks for your message. We'll get back to you soon.\"`;
+        }, 1000);
+      }
+    });
+  </script>
+
+</body>
+</html>
